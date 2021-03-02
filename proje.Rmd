@@ -1,0 +1,45 @@
+---
+title: "karar_agaclari"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+```{r}
+df<-diabetes_csv
+
+
+set.seed(3)
+egitim_indeksi <- createDataPartition(df$class,
+                                    p = .8, 
+                                    list = FALSE, 
+                                    times = 1)
+
+egitim_seti<-df[egitim_indeksi,]
+test_seti<-df[-egitim_indeksi,]
+
+
+
+```
+
+```{r}
+library(rpart)
+
+colnames(diabetes_csv)
+
+diabet_model<-rpart(class~., data=egitim_seti)
+
+plot(diabet_model,margin=0.1)
+
+text(diabet_model,use.n = TRUE,pretty = TRUE,cex=0.8)
+```
+
+
+```{r}
+pred_diabet<-predict(diabet_model,newdata = test_seti, type = "class")
+
+confusionMatrix(table(pred_diabet, test_seti$class))
+
+
+
+```
+
