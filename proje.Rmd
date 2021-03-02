@@ -7,7 +7,7 @@ editor_options:
 ```{r}
 df<-diabetes_csv
 
-
+#########
 set.seed(3)
 egitim_indeksi <- createDataPartition(df$class,
                                     p = .8, 
